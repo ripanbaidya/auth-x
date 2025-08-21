@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  # postgres configuration
+  postgres:
+    container_name: authx-postgres
+    image: postgres:15  # specify version
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: authx_db
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - authx_network
+    restart: unless-stopped
+
+  # mail dev configuration
+  mail-dev:
+    container_name: authx-maildev
+    image: maildev/maildev:2.1.0
+    ports:
+      - "1080:1080"   # web UI
+      - "1025:1025"   # SMTP (used by Spring)
+    networks:
+      - authx_network
+    restart: unless-stopped
+
+networks:
+  authx_network:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
