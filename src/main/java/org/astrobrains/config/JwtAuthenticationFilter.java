@@ -21,9 +21,9 @@ import java.io.IOException;
 /**
  * Custom JWT Authentication Filter that executes once per request.
  * Responsibilities:
- *  - Extract JWT from Authorization header
- *  - Validate the token
- *  - Set the authenticated user in SecurityContext
+ * Extract JWT from Authorization header
+ * Validate the token
+ * Set the authenticated user in SecurityContext
  */
 @Slf4j
 @Component

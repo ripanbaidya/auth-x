@@ -27,16 +27,12 @@ public class JwtService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
-    /**
-     * Generate JWT token for a given user
-     */
+    // Generate JWT token for a given user
     public String generateToken(UserDetails userDetails) {
         return buildToken(new HashMap<>(), userDetails, jwtExpiration);
     }
 
-    /**
-     * Build a JWT token with claims, username, authorities, and expiration.
-     */
+    // Build a JWT token with claims, username, authorities, and expiration.
     private String buildToken(Map<String, Object> claims, UserDetails userDetails, Long jwtExpiration) {
         var authorities = userDetails.getAuthorities()
                 .stream()
@@ -56,9 +52,7 @@ public class JwtService {
         return token;
     }
 
-    /**
-     * Validate a JWT token against user details.
-     */
+    // Validate a JWT token against user details.
     public boolean isTokenValid(String token, UserDetails userDetails) {
         try {
             final String username = extractUsername(token);
@@ -76,16 +70,12 @@ public class JwtService {
         }
     }
 
-    /**
-     * Extract username (subject) from the JWT token.
-     */
+    // Extract username (subject) from the JWT token.
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    /**
-     * Extract expiration date from JWT token.
-     */
+    // Extract expiration date from JWT token.
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
@@ -94,17 +84,13 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    /**
-     * Extract a single claim from JWT token.
-     */
+    // Extract a single claim from JWT token.
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    /**
-     * Extract all claims from JWT token with error handling.
-     */
+    // Extract all claims from JWT token with error handling.
     private Claims extractAllClaims(String token) {
         try {
             return Jwts.parserBuilder()
