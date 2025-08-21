@@ -1,10 +1,10 @@
-version: "3.9"
+version: '3.9'
 
 services:
-  # postgres configuration
+  # Postgres configuration
   postgres:
     container_name: authx-postgres
-    image: postgres:15  # specify version
+    image: postgres:17.6  # latest stable version
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
@@ -18,10 +18,10 @@ services:
       - authx_network
     restart: unless-stopped
 
-  # mail dev configuration
+  # MailDev configuration
   mail-dev:
     container_name: authx-maildev
-    image: maildev/maildev:2.1.0
+    image: maildev/maildev:2.2.1  # latest stable version
     ports:
       - "1080:1080"   # web UI
       - "1025:1025"   # SMTP (used by Spring)
