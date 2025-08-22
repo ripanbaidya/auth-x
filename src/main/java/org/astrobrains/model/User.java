@@ -109,7 +109,7 @@ public class User implements UserDetails, Principal {
     }
     
     // this method will be used to get the full name of the user
-    private String getFullName() {
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 }
