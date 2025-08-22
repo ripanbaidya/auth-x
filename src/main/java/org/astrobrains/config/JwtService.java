@@ -33,7 +33,7 @@ public class JwtService {
     }
 
     // Build a JWT token with claims, username, authorities, and expiration.
-    private String buildToken(Map<String, Object> claims, UserDetails userDetails, Long jwtExpiration) {
+    public String buildToken(Map<String, Object> claims, UserDetails userDetails, Long jwtExpiration) {
         var authorities = userDetails.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
@@ -126,5 +126,10 @@ public class JwtService {
             throw new IllegalArgumentException("JWT secret key must be at least 256 bits (32 bytes) long.");
         }
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    // get jwt expiration
+    public Long getJwtExpiration() {
+        return jwtExpiration;
     }
 }
